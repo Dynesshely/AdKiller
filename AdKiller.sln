@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdKiller", "AdKiller\AdKiller.csproj", "{05BE0D84-42BC-40A9-BD1B-0E064464100B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdKiller.Contract", "AdKiller.Contract\AdKiller.Contract.csproj", "{FF56B047-517D-4449-960F-ACB580E9AF36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdKiller.Shared", "AdKiller.Shared\AdKiller.Shared.csproj", "{16D65316-884A-4F05-97CE-860EE992FDE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdKiller.Killers", "AdKiller.Killers", "{E9D45F58-F35C-4CC1-AA5C-A3880F4BDD24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Killer.WindowsAd", "AdKiller.Killers\Killer.WindowsAd\Killer.WindowsAd.csproj", "{C0285765-218E-48DF-82FF-31E6A35B237E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F0E3EA8A-32E5-4B09-8AE4-3C541C74F478}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Directory.Packages.props = Directory.Packages.props
+		LICENSE = LICENSE
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05BE0D84-42BC-40A9-BD1B-0E064464100B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BE0D84-42BC-40A9-BD1B-0E064464100B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BE0D84-42BC-40A9-BD1B-0E064464100B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BE0D84-42BC-40A9-BD1B-0E064464100B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF56B047-517D-4449-960F-ACB580E9AF36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF56B047-517D-4449-960F-ACB580E9AF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF56B047-517D-4449-960F-ACB580E9AF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF56B047-517D-4449-960F-ACB580E9AF36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D65316-884A-4F05-97CE-860EE992FDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D65316-884A-4F05-97CE-860EE992FDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D65316-884A-4F05-97CE-860EE992FDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D65316-884A-4F05-97CE-860EE992FDE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0285765-218E-48DF-82FF-31E6A35B237E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0285765-218E-48DF-82FF-31E6A35B237E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0285765-218E-48DF-82FF-31E6A35B237E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0285765-218E-48DF-82FF-31E6A35B237E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C0285765-218E-48DF-82FF-31E6A35B237E} = {E9D45F58-F35C-4CC1-AA5C-A3880F4BDD24}
+	EndGlobalSection
+EndGlobal

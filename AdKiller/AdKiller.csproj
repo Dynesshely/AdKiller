@@ -27,6 +27,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AdKiller.Contract\AdKiller.Contract.csproj" />
-    <ProjectReference Include="..\AdKiller.Shared\AdKiller.Shared.csproj" />
   </ItemGroup>
 </Project>

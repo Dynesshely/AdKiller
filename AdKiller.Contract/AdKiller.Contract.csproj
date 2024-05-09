@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdKiller.Shared\AdKiller.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
