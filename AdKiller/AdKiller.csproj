@@ -14,6 +14,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\1024x1024.png" />
+    <None Remove="Assets\128x128.png" />
+    <None Remove="Assets\16x16.png" />
+    <None Remove="Assets\192x192.png" />
+    <None Remove="Assets\240x240.png" />
+    <None Remove="Assets\256x256.png" />
+    <None Remove="Assets\32x32.png" />
+    <None Remove="Assets\480x480.png" />
+    <None Remove="Assets\512x512.png" />
+    <None Remove="Assets\540x540.png" />
+    <None Remove="Assets\64x64.png" />
+    <None Remove="Assets\720x720.png" />
+    <None Remove="Assets\Icons\adkiller.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Avalonia" />
     <PackageReference Include="Avalonia.Desktop" />
     <PackageReference Include="Avalonia.Themes.Fluent" />
