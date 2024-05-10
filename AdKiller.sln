@@ -15,6 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Killer.WindowsAd", "AdKille
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F0E3EA8A-32E5-4B09-8AE4-3C541C74F478}"
 	ProjectSection(SolutionItems) = preProject
+		.csharpierrc = .csharpierrc
 		.gitignore = .gitignore
 		Directory.Packages.props = Directory.Packages.props
 		LICENSE = LICENSE
@@ -50,5 +51,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C0285765-218E-48DF-82FF-31E6A35B237E} = {E9D45F58-F35C-4CC1-AA5C-A3880F4BDD24}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {552D485D-9420-40F2-A927-92C4FC9B2916}
 	EndGlobalSection
 EndGlobal
