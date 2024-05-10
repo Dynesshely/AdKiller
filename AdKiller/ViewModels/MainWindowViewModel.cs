@@ -2,9 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using AdKiller.Contract;
 using AdKiller.Shared;
 using ReactiveUI;
@@ -15,7 +13,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     public MainWindowViewModel()
     {
-        var path = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Killers";
+        var path = $"{System.AppContext.BaseDirectory}/Killers";
 
         var catalog = new DirectoryCatalog(path, "*.dll");
 
