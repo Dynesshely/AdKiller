@@ -9,6 +9,34 @@ public class Program : IIdentifier
         "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\"
     );
 
+    public static KillerAction GetOneKeyKiller(string name, string des, string key, string keyName)
+    {
+        return new KillerAction()
+        {
+            Name = name,
+            Description = des,
+            CanExecute = true,
+            IsNeedToRestart = true,
+            Killer = () => registryEditor.SetKey(key).DisableKey(keyName),
+            Reopener = () => registryEditor.SetKey(key).EnableKey(keyName),
+            EnabledChecker = () => registryEditor.SetKey(key).KeyToggled(keyName),
+        };
+    }
+
+    public static KillerAction GetKeysKiller(string name, string des, string key, IEnumerable<string> keyNames)
+    {
+        return new KillerAction()
+        {
+            Name = name,
+            Description = des,
+            CanExecute = true,
+            IsNeedToRestart = true,
+            Killer = () => registryEditor.SetKey(key).DisableKeys(keyNames),
+            Reopener = () => registryEditor.SetKey(key).EnableKeys(keyNames),
+            EnabledChecker = () => registryEditor.SetKey(key).AnyKeyToggled(keyNames),
+        };
+    }
+
     public KillerInfo GetInfo() =>
         new()
         {
@@ -18,111 +46,55 @@ public class Program : IIdentifier
             Authors = "Dynesshely",
             Killers =
             [
-                new()
-                {
-                    Name = "Disable File Explorer ADs",
-                    Description = "Disable ADs in Windows File Explorer",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("Explorer\\Advanced\\").DisableKey("ShowSyncProviderNotifications"),
-                    Reopener = () => registryEditor.SetKey("Explorer\\Advanced\\").EnableKey("ShowSyncProviderNotifications"),
-                },
-                new()
-                {
-                    Name = "Disable Start Menu ADs",
-                    Description = "Disable ADs in Start Menu",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("Explorer\\Advanced\\").DisableKey("Start_IrisRecommendations"),
-                    Reopener = () => registryEditor.SetKey("Explorer\\Advanced\\").EnableKey("Start_IrisRecommendations"),
-                },
-                new()
-                {
-                    Name = "Disable Lock Screen Tips And ADs",
-                    Description = "Disable ADs and tips in lock screen",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () =>
-                        registryEditor
-                            .SetKey("ContentDeliveryManager")
-                            .DisableKeys(["RotatingLockScreenOverlayEnabled", "SubscribedContent-338387Enabled"]),
-                    Reopener = () =>
-                        registryEditor
-                            .SetKey("ContentDeliveryManager")
-                            .EnableKeys(["RotatingLockScreenOverlayEnabled", "SubscribedContent-338387Enabled"]),
-                },
-                new()
-                {
-                    Name = "Disable Settings ADs",
-                    Description = "Disable ADs in Windows Settings",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () =>
-                        registryEditor
-                            .SetKey("ContentDeliveryManager")
-                            .DisableKeys(
-                                [
-                                    "SubscribedContent-338393Enabled",
-                                    "SubscribedContent-353694Enabled",
-                                    "SubscribedContent-353696Enabled"
-                                ]
-                            ),
-                    Reopener = () =>
-                        registryEditor
-                            .SetKey("ContentDeliveryManager")
-                            .EnableKeys(
-                                [
-                                    "SubscribedContent-338393Enabled",
-                                    "SubscribedContent-353694Enabled",
-                                    "SubscribedContent-353696Enabled"
-                                ]
-                            ),
-                },
-                new()
-                {
-                    Name = "Disable General Tips And ADs",
-                    Description = "Disable general tips and ADs",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("ContentDeliveryManager").DisableKey("SubscribedContent-338389Enabled"),
-                    Reopener = () => registryEditor.SetKey("ContentDeliveryManager").EnableKey("SubscribedContent-338389Enabled"),
-                },
-                new()
-                {
-                    Name = "Disable \"Finish Setup\" ADs",
-                    Description = "Disable ADs in \"Finish Setup\"",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("UserProfileEngagement").DisableKey("ScoobeSystemSettingEnabled"),
-                    Reopener = () => registryEditor.SetKey("UserProfileEngagement").EnableKey("ScoobeSystemSettingEnabled"),
-                },
-                new()
-                {
-                    Name = "Disable \"Welcome Experience\" ADs",
-                    Description = "Disable ADs in \"Welcome Experience\"",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("ContentDeliveryManager").DisableKey("SubscribedContent-310093Enabled"),
-                    Reopener = () => registryEditor.SetKey("ContentDeliveryManager").EnableKey("SubscribedContent-310093Enabled"),
-                },
-                new()
-                {
-                    Name = "Disable Personalized ADs",
-                    Description = "Disable personalized ADs",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("AdvertisingInfo").DisableKey("Enabled"),
-                    Reopener = () => registryEditor.SetKey("AdvertisingInfo").EnableKey("Enabled"),
-                },
-                new()
-                {
-                    Name = "Disable \"Tailored Experiences\"",
-                    Description = "Disable ADs in \"Tailored Experiences\"",
-                    CanExecute = true,
-                    IsNeedToRestart = true,
-                    Killer = () => registryEditor.SetKey("Privacy").DisableKey("TailoredExperiencesWithDiagnosticDataEnabled"),
-                    Reopener = () => registryEditor.SetKey("Privacy").EnableKey("TailoredExperiencesWithDiagnosticDataEnabled"),
-                },
+                GetOneKeyKiller(
+                    "Disable File Explorer ADs",
+                    "Disable ADs in Windows File Explorer",
+                    "Explorer\\Advanced\\",
+                    "ShowSyncProviderNotifications"
+                ),
+                GetOneKeyKiller(
+                    "Disable Start Menu ADs",
+                    "Disable ADs in Start Menu",
+                    "Explorer\\Advanced\\",
+                    "Start_IrisRecommendations"
+                ),
+                GetKeysKiller(
+                    "Disable Lock Screen Tips And ADs",
+                    "Disable ADs and tips in lock screen",
+                    "ContentDeliveryManager",
+                    ["RotatingLockScreenOverlayEnabled", "SubscribedContent-338387Enabled"]
+                ),
+                GetKeysKiller(
+                    "Disable Settings ADs",
+                    "Disable ADs in Windows Settings",
+                    "ContentDeliveryManager",
+                    ["SubscribedContent-338393Enabled", "SubscribedContent-353694Enabled", "SubscribedContent-353696Enabled"]
+                ),
+                GetOneKeyKiller(
+                    "Disable General Tips And ADs",
+                    "Disable general tips and ADs",
+                    "ContentDeliveryManager",
+                    "SubscribedContent-338389Enabled"
+                ),
+                GetOneKeyKiller(
+                    "Disable \"Finish Setup\" ADs",
+                    "Disable ADs in \"Finish Setup\"",
+                    "UserProfileEngagement",
+                    "ScoobeSystemSettingEnabled"
+                ),
+                GetOneKeyKiller(
+                    "Disable \"Welcome Experience\" ADs",
+                    "Disable ADs in \"Welcome Experience\"",
+                    "ContentDeliveryManager",
+                    "SubscribedContent-310093Enabled"
+                ),
+                GetOneKeyKiller("Disable Personalized ADs", "Disable personalized ADs", "AdvertisingInfo", "Enabled"),
+                GetOneKeyKiller(
+                    "Disable \"Tailored Experiences\"",
+                    "Disable ADs in \"Tailored Experiences\"",
+                    "Privacy",
+                    "TailoredExperiencesWithDiagnosticDataEnabled"
+                ),
             ],
         };
 }

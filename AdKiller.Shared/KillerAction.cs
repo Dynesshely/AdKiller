@@ -13,4 +13,6 @@ public class KillerAction
     public Action Killer { get; set; } = () => { };
 
     public Action Reopener { get; set; } = () => { };
+
+    public Func<bool> EnabledChecker { get; set; } = () => false;
 };

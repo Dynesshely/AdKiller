@@ -55,9 +55,22 @@ public class RegistryEditor
 
     public void DisableKey(string name) => ToggleKey(name, false);
 
-    public void EnableKeys(IEnumerable<string> names) => names.ToList().ForEach(name => EnableKey(name));
+    public void EnableKeys(IEnumerable<string> names) => names.ToList().ForEach(EnableKey);
 
-    public void DisableKeys(IEnumerable<string> names) => names.ToList().ForEach(name => DisableKey(name));
+    public void DisableKeys(IEnumerable<string> names) => names.ToList().ForEach(DisableKey);
+
+    public bool KeyToggled(string name)
+    {
+        if (!ExistsKey()) return false;
+
+        var value = ReadKey(name);
+
+        if (value is null) return false;
+
+        return (int)value == 1;
+    }
+
+    public bool AnyKeyToggled(IEnumerable<string> names) => names.Any(KeyToggled);
 
     public object? ReadKey(string name)
     {
