@@ -6,7 +6,9 @@ public class RegistryEditor
 {
     public RegistryKey? RegistryKey { get; set; }
 
-    public string? Location { get; set; } = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\";
+    public string Location { get; set; } = "";
+
+    public string Key { get; set; } = "";
 
 #pragma warning disable CA1416
 
@@ -21,72 +23,73 @@ public class RegistryEditor
         return this;
     }
 
-    public bool ExistsKey(string key)
+    public RegistryEditor SetKey(string key)
     {
-        var rkey = RegistryKey?.OpenSubKey(Location + key);
-
-        rkey?.Close();
-
-        return rkey is not null;
+        Key = key;
+        return this;
     }
 
-    public bool WriteKey(string key, string name, object value)
+    public bool ExistsKey()
     {
-        var rkey = (RegistryKey?.CreateSubKey(Location + key, true)) ?? throw new Exception("Failed to open/create registry key.");
+        var key = RegistryKey?.OpenSubKey(Location + Key);
 
-        rkey?.SetValue(name, value);
+        key?.Close();
 
-        rkey?.Close();
+        return key is not null;
+    }
+
+    public bool WriteKey(string name, object value)
+    {
+        var key = (RegistryKey?.CreateSubKey(Location + Key, true)) ?? throw new Exception("Failed to open/create registry key.");
+
+        key?.SetValue(name, value);
+
+        key?.Close();
 
         return true;
     }
 
-    public object? ReadKey(string key, string name)
+    public void ToggleKey(string name, bool ability) => WriteKey(name, ability ? 1 : 0);
+
+    public void EnableKey(string name) => ToggleKey(name, true);
+
+    public void DisableKey(string name) => ToggleKey(name, false);
+
+    public void EnableKeys(IEnumerable<string> names) => names.ToList().ForEach(name => EnableKey(name));
+
+    public void DisableKeys(IEnumerable<string> names) => names.ToList().ForEach(name => DisableKey(name));
+
+    public object? ReadKey(string name)
     {
-        var rkey = RegistryKey?.OpenSubKey(Location + key);
+        var key = RegistryKey?.OpenSubKey(Location + Key);
 
-        if (rkey is null) return null;
+        if (key is null)
+            return null;
 
-        return rkey.GetValue(name);
+        return key.GetValue(name);
     }
 
-    public void DeleteKey(string key, string name)
+    public void DeleteKey(string name)
     {
-        var rkey = RegistryKey?.OpenSubKey(Location + key, true);
+        var key = RegistryKey?.OpenSubKey(Location + Key, true);
 
-        if (rkey is not null)
+        if (key is not null)
         {
-            rkey.DeleteValue(name, false);
+            key.DeleteValue(name, false);
 
-            rkey.Close();
+            key.Close();
         }
     }
 
-    public static RegistryEditor HKeyCurrentUser => new()
-    {
-        RegistryKey = Registry.CurrentUser,
-    };
+    public static RegistryEditor HKeyCurrentUser => new() { RegistryKey = Registry.CurrentUser, };
 
-    public static RegistryEditor HKeyLocalMachine => new()
-    {
-        RegistryKey = Registry.LocalMachine,
-    };
+    public static RegistryEditor HKeyLocalMachine => new() { RegistryKey = Registry.LocalMachine, };
 
-    public static RegistryEditor HKeyClassesRoot => new()
-    {
-        RegistryKey = Registry.ClassesRoot,
-    };
+    public static RegistryEditor HKeyClassesRoot => new() { RegistryKey = Registry.ClassesRoot, };
 
-    public static RegistryEditor HKeyUsers => new()
-    {
-        RegistryKey = Registry.Users,
-    };
+    public static RegistryEditor HKeyUsers => new() { RegistryKey = Registry.Users, };
 
-    public static RegistryEditor HKeyCurrentConfig => new()
-    {
-        RegistryKey = Registry.CurrentConfig,
-    };
+    public static RegistryEditor HKeyCurrentConfig => new() { RegistryKey = Registry.CurrentConfig, };
 
 #pragma warning restore CA1416
-
 }
