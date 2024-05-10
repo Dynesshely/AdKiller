@@ -1,20 +1,134 @@
-<Window xmlns="https://github.com/avaloniaui"
+<Window x:Class="AdKiller.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:AdKiller.ViewModels"
+        xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="AdKiller.Views.MainWindow"
+        xmlns:model="using:AdKiller.Shared"
+        xmlns:sys="using:System"
+        xmlns:vm="using:AdKiller.ViewModels"
+        Title="AdKiller - Your eyes cleaner !"
+        d:DesignHeight="720"
+        d:DesignWidth="1280"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/Icons/AdKiller.ico"
-        Title="AdKiller">
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid>
+        <controls:NavigationDrawer LeftDrawerOpened="True">
+            <controls:NavigationDrawer.LeftDrawerContent>
+                <DockPanel>
+                    <controls:ColorZone Height="220"
+                                        DockPanel.Dock="Top"
+                                        Mode="Standard">
+                        <StackPanel>
+                            <Image Width="96"
+                                   Height="96"
+                                   Margin="10,30"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Source="/Assets/Icons/240x240.png"/>
+                            <TextBlock HorizontalAlignment="Center"
+                                       Classes="Headline4"
+                                       Text="AdKiller"/>
+                        </StackPanel>
+                    </controls:ColorZone>
+                    <ListBox ItemsSource="{Binding KillersProviders}"
+                             SelectedIndex="{Binding SelectedIndex}"
+                             SelectionMode="Single">
+                        <ListBox.DataTemplates>
+                            <DataTemplate x:DataType="model:KillerInfo">
+                                <ListBoxItem Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.DataTemplates>
+                    </ListBox>
+                </DockPanel>
+            </controls:NavigationDrawer.LeftDrawerContent>
+            <Grid>
+                <DockPanel Margin="30">
+                    <StackPanel DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Classes="Headline2" Text="{Binding SelectedKiller.Name}"/>
+                            <Border Width="15"/>
+                            <controls:ColorZone Padding="8"
+                                                VerticalAlignment="Bottom"
+                                                CornerRadius="7.5"
+                                                Mode="Accent">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Classes="Subtitle1" Text=" v"/>
+                                    <TextBlock Classes="Subtitle1" Text="{Binding SelectedKiller.Version}"/>
+                                </StackPanel>
+                            </controls:ColorZone>
+                        </StackPanel>
+                        <Border Height="25"/>
+                        <controls:ColorZone Padding="16"
+                                            VerticalAlignment="Bottom"
+                                            CornerRadius="7.5">
+                            <StackPanel>
+
+                                <TextBlock Classes="Headline6" Text="{Binding SelectedKiller.Description}"/>
+                                <Border Height="15"/>
+                                <ItemsControl ItemsSource="{Binding Authors}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.DataTemplates>
+                                        <DataTemplate x:DataType="sys:String">
+                                            <TextBlock Classes="Body1" Text="{Binding}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.DataTemplates>
+                                </ItemsControl>
+                            </StackPanel>
+                        </controls:ColorZone>
+                        <Border Height="20"/>
+                        <Separator/>
+                        <Border Height="20"/>
+                    </StackPanel>
+                    <ScrollViewer>
+                        <ItemsControl Margin="0,0,35,0" ItemsSource="{Binding SelectedKiller.Killers}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="20"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate x:DataType="model:KillerAction">
+                                    <controls:Card>
+                                        <Grid Margin="5">
+                                            <DockPanel>
+                                                <StackPanel DockPanel.Dock="Left">
+                                                    <TextBlock Classes="Headline5" Text="{Binding Name}"/>
+                                                    <TextBlock Classes="Body2" Text="{Binding Description}"/>
+                                                </StackPanel>
+                                                <StackPanel DockPanel.Dock="Right"
+                                                            Orientation="Horizontal"
+                                                            Spacing="20">
+                                                    <Button Command="{Binding Reopener}"
+                                                            Content="Reopen"
+                                                            IsEnabled="{Binding !IsEnabled}"
+                                                            Theme="{StaticResource MaterialOutlineButton}"/>
+                                                    <Button Command="{Binding Killer}"
+                                                            Content="Kill"
+                                                            IsEnabled="{Binding IsEnabled}"/>
+                                                </StackPanel>
+                                                <Border/>
+                                            </DockPanel>
+                                        </Grid>
+                                    </controls:Card>
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Grid>
+        </controls:NavigationDrawer>
+    </Grid>
 
 </Window>

@@ -10,6 +10,8 @@ public class KillerAction
 
     public bool IsNeedToRestart { get; set; }
 
+    public bool IsEnabled => CanExecute && !EnabledChecker();
+
     public Action Killer { get; set; } = () => { };
 
     public Action Reopener { get; set; } = () => { };

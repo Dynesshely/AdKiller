@@ -39,6 +39,7 @@
     configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
     <PackageReference Include="Avalonia.ReactiveUI" />
+    <PackageReference Include="Material.Avalonia" />
   </ItemGroup>
 
   <ItemGroup>
