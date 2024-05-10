@@ -23,6 +23,10 @@
 <a href="https://github.com/Dynesshely/AdKiller/watchers"><img src="https://img.shields.io/github/watchers/Dynesshely/AdKiller?style=social" alt="Watches"></a>
 <a href="https://github.com/Dynesshely/AdKiller/discussions"><img src="https://img.shields.io/github/discussions/Dynesshely/AdKiller?style=social" alt="Discussions"></a>
 
+# Screenshots
+
+![screenshot 0](.github/assets/screenshots.0.png)
+
 # Usage
 
 // ToDo ...
