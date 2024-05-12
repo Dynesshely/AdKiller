@@ -19,11 +19,6 @@ Get-ChildItem -Directory | ForEach-Object {
 
     Push-Location ./bin/Debug/net8.0
 
-    # Get-ChildItem -Filter "*.dll" | ForEach-Object {
-    #     Copy-Item -Path $_.FullName -Destination $KillersPath
-    #     Write-Host "已拷贝文件: $_ to ./CopiedFiles"
-    # }
-
     Copy-Item -Path "$dirName.dll" -Destination $KillersPath
     Write-Host "Copied file: $dirName.dll to $KillersPath"
 
